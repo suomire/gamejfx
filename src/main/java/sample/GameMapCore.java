@@ -45,7 +45,7 @@ public class GameMapCore {
 
     //метод для выделения колонки из
     public Cell[] getCol(int iCol) {
-        Cell[] subCol = new Cell[15];
+        Cell[] subCol = new Cell[16];
         for (int i = 0; i < subCol.length; i++) {
             subCol[i] = gameMap[i][iCol];
         }
@@ -65,6 +65,7 @@ public class GameMapCore {
     public Cell[] getDiag(int n, boolean j_on) {
         /**j_on - отвечает за местоположение диагонали, true - над главной (i+j < 14),
          *  false - под главной (i+j>14)
+         *  n - номер диагонали считая от самоц большоц начиная с 0
          */
         List<Cell> subDiag = new ArrayList<>();
         if (!j_on) {
@@ -101,6 +102,7 @@ public class GameMapCore {
                 }
                 if (score) break;
             }
+            if (score) break;
             turnJ = true;
         }
         turnJ = false;
@@ -113,6 +115,7 @@ public class GameMapCore {
                 score = subarrayFinding(player.getNumber(), subArr);
                 if (score) break;
             }
+            if (score) break;
             turnJ = true;
         }
         return score;
@@ -121,16 +124,16 @@ public class GameMapCore {
     //метод для получения побочной диагонали и ей параллельных
     public Cell[] getSideDiag(int n, boolean j_on) {
         List<Cell> subDiag = new ArrayList<>();
-        /**j_on - отвечает за местоположение диагонали, true - над побочной (i+j < 14),
+        /**j_on - отвечает за местоположение диагонали, true - над побочной (i+j < 15),
          *  false - под побочной (i+j>14)
          */
 
         if (!j_on) {
-            for (int i = 14, j = n; i > -1 + n & j < 15; i--, j++) {
+            for (int i = 15, j = n; i > -1 + n & j < 16; i--, j++) {
                 subDiag.add(gameMap[i][j]);
             }
         } else {
-            for (int i = 14 - n, j = 0; i > -1 & j < 15 - n; i--, j++) {
+            for (int i = 15 - n, j = 0; i > -1 & j < 16 - n; i--, j++) {
                 subDiag.add(gameMap[i][j]);
             }
         }
