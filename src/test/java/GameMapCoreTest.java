@@ -113,6 +113,10 @@ public class GameMapCoreTest {
         for (Cell cell : returnedSubCol) {
             assertEquals(2, cell.getPlayerNum().getNumber());
         }
+        returnedSubCol = gm.getDiag(0, true);
+        for (Cell cell : returnedSubCol) {
+            assertEquals(2, cell.getPlayerNum().getNumber());
+        }
     }
 
     @Test

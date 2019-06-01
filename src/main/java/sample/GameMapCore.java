@@ -9,9 +9,8 @@ public class GameMapCore {
     private Player player1;
     private Player player2;
 
-
-    //конструктор для задания чистого игрового поля
     public GameMapCore() {
+        setGameMap();
     }
 
     public void setGameMap() {
@@ -30,7 +29,7 @@ public class GameMapCore {
         this.gameMap = test;
     }
 
-    //метод для установки игровой фишки. изменить на void???????
+    //метод для хода. После всегда проверяется наличие выигрышной комбинации
     public boolean move(int r, int c, boolean player) { //cell[][]->boolean -- вернет продолжать игру или нет
         if (player) {
             this.gameMap[r][c] = new Cell(r, c, this.player1);
@@ -43,7 +42,7 @@ public class GameMapCore {
         }
     }
 
-    //метод для выделения колонки из
+    //метод для выделения колонки из игрового поля
     public Cell[] getCol(int iCol) {
         Cell[] subCol = new Cell[16];
         for (int i = 0; i < subCol.length; i++) {
@@ -63,9 +62,10 @@ public class GameMapCore {
 
     //метод для получения главной диагонали или ей параллельных
     public Cell[] getDiag(int n, boolean j_on) {
-        /**j_on - отвечает за местоположение диагонали, true - над главной (i+j < 14),
-         *  false - под главной (i+j>14)
+        /**j_on - отвечает за местоположение диагонали, true - над главной (i+j < 15),
+         *  false - под главной (i+j>15)
          *  n - номер диагонали считая от самоц большоц начиная с 0
+         *  для n =0 значение j_on не играет значения
          */
         List<Cell> subDiag = new ArrayList<>();
         if (!j_on) {
@@ -125,7 +125,9 @@ public class GameMapCore {
     public Cell[] getSideDiag(int n, boolean j_on) {
         List<Cell> subDiag = new ArrayList<>();
         /**j_on - отвечает за местоположение диагонали, true - над побочной (i+j < 15),
-         *  false - под побочной (i+j>14)
+         *  false - под побочной (i+j>15)
+         *  n - номер диагонали считая от самоц большоц начиная с 0
+         *  для n =0 значение j_on не играет значения
          */
 
         if (!j_on) {

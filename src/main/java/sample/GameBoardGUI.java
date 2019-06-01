@@ -3,15 +3,14 @@ package sample;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.File;
+import java.util.Optional;
 
 
 public class GameBoardGUI extends Application {
@@ -93,6 +92,7 @@ public class GameBoardGUI extends Application {
         start.setAlignment(Pos.CENTER);
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {
@@ -118,24 +118,30 @@ public class GameBoardGUI extends Application {
     }
 
     public void initGame() {
-        gameMapCore = new GameMapCore(); //???????????????????????????????????????????
-        gameMapCore.setGameMap();
+        gameMapCore = new GameMapCore();
     }
 
 
     public void endTheGame(boolean player) {
-
         String playerNum;
         if (player) {
             playerNum = "Player #1 - whites";
         } else {
             playerNum = "Player #2 - blacks";
         }
-        stage.close();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("GAME IS OVER");
-        alert.setContentText("The winner is " + playerNum);
-        alert.show();
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setHeaderText("GAME IS OVER");
+        Label strWinner = new Label("The winner is " + playerNum);
+        GridPane grid = new GridPane();
+        grid.add(strWinner, 1, 1);
+        dialog.getDialogPane().setContent(grid);
+        ButtonType buttonTypeOk = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && (result.get() == buttonTypeOk)) {
+            stage.close();
+        }
+
 
     }
 }
